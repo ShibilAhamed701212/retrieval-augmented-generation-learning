@@ -58,7 +58,7 @@ Each notebook's first cell runs `%pip install -q -r requirements.txt`, so it als
 
 ### Configuration
 
-Keys are read from `.env` (git-ignored) by `python-dotenv`. If `OPENAI_API_KEY` (or `COHERE_API_KEY` in the Part 15 notebook) is not set, the notebook prompts for it with `getpass`, so it is never written into the notebook.
+Keys are read from `.env` (git-ignored) by `python-dotenv`. If `OPENAI_API_KEY` is not set, the setup cell prompts for it with `getpass`, so it is never written into the notebook. `COHERE_API_KEY` is only requested by the Cohere re-rank cell in Part 15, so the rest of that notebook runs without it. Without `LANGCHAIN_API_KEY`, the setup cell forces `LANGCHAIN_TRACING_V2=false`.
 
 | Variable | Needed for | Required |
 | --- | --- | --- |
