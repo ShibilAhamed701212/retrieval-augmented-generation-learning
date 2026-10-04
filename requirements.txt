@@ -1,12 +1,17 @@
-langchain
-langchain_core
-langchain_openai
-langchain_community
-langchain_text_splitters
-chromadb
-youtube-transcript-api
-pytube
-beautifulsoup4
+# The notebooks use LangChain 0.3 APIs (langchain.load, langchain.retrievers,
+# langchain.storage, ...) that were removed in LangChain 1.0, so stay on 0.3.x.
+langchain>=0.3.27,<0.4
+langchain-core>=0.3.76,<0.4
+langchain-openai>=0.3.33,<0.4
+langchain-community>=0.3.29,<0.4
+langchain-text-splitters>=0.3.11,<0.4
+langchain-cohere>=0.4,<0.5
+pydantic>=2,<3
+chromadb>=1.0,<2
+tiktoken>=0.7
+numpy>=1.26
+beautifulsoup4>=4.12
+youtube-transcript-api>=1.0,<2
+pytube>=15.0
+python-dotenv>=1.0
 jupyter
-python-dotenv
-tiktoken
