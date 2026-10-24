@@ -94,10 +94,14 @@ The GitHub Actions workflow in [`.github/workflows/ci.yml`](.github/workflows/ci
 - **`hub.pull("rlm/rag-prompt")` no longer works without a LangSmith account** (current `langsmith` refuses anonymous public prompt pulls and requires opting in to deserialize remote objects). The same prompt text is now defined inline.
 - **`langchain_core.pydantic_v1` is deprecated**; the routing and query-construction schemas now use Pydantic v2 directly.
 - Added `.env.example`, `scripts/check_notebooks.py`, `ruff.toml` and the CI workflow.
+- **Part 15 used the deprecated `langchain.retrievers.document_compressors.CohereRerank`**, which defaults to Cohere's old `rerank-english-v2.0` model and is removed in LangChain 1.0. It now uses `langchain_cohere.CohereRerank(model="rerank-english-v3.0")`.
+- **Part 14's Wikipedia fetch had no timeout and no status check.** When Wikipedia rate-limits a request it returns plain text, so `response.json()` failed with an unclear `JSONDecodeError`. The request now has a 30-second timeout and calls `raise_for_status()`. Its User-Agent identifies this repository instead of the upstream tutorial author's email address.
 
 ## Known limitations
 
 - The notebooks have not been executed end to end in this fork (no API keys in CI). The saved cell outputs are from the upstream author's original runs.
+- The Cohere model name `rerank-english-v3.0` was not checked against a live Cohere account. If Cohere rejects it, pass a current rerank model name instead.
+- Wikipedia rate-limits some cloud IP ranges (it returned HTTP 429 during this audit), so Part 14's fetch can fail from such networks.
 - Several cells use `gpt-3.5-turbo` / `gpt-3.5-turbo-0125`. Whether those model names are still served depends on OpenAI's current model list; swap in a current model if the API rejects them.
 - Part 11 loads YouTube metadata with `YoutubeLoader(add_video_info=True)`, which relies on `pytube`. `pytube` is unmaintained and returned `HTTP Error 400` when tried during this audit. The rest of Part 11 (LLM query structuring) does not depend on that cell. YouTube may also block transcript requests from cloud IPs.
 - The notebooks use LangChain 0.3 APIs that are deprecated in later releases (`get_relevant_documents`, `langchain.load`, `langchain.retrievers`). Moving to LangChain 1.x would need `langchain-classic` or rewritten imports.
